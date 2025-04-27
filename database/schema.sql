@@ -26,13 +26,13 @@ CREATE TABLE "playTypes" (
 );
 
 CREATE TABLE "users" (
-  "id" serial PRIMARY KEY,
+  "userId" serial PRIMARY KEY,
   "firstName" text,
   "lastName" text,
   "email" text,
   "longDescription" text,
   "zipCode" integer,
-  "password" text,
+  "hashedPassword" text,
   "skillId" integer,
   "playTypeId" integer,
   "createdAt" timestamp,

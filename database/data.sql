@@ -30,7 +30,7 @@ insert into "playTypes"
   ('both');
 
 insert into "users"
-   ("firstName", "lastName", "email","longDescription", "zipCode", "password","skillId","playTypeId","genderId","handedNessId")
+   ("firstName", "lastName", "email","longDescription", "zipCode", "hashedPassword","skillId","playTypeId","genderId","handedNessId")
    values
    ('Frank', 'Kang', 'frankkang@rocketmail.com', 'Plays offensive all court game', 92026, 'tennis', 4, 1, 1, 1),
    ('Tom', 'Brown', 'tombrown@rocketmail.com', 'Plays defensive baseline game', 92025, 'tennis', 5, 1, 1, 1),
