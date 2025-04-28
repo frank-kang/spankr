@@ -94,6 +94,106 @@ app.post('/api/auth/sign-in', async (req, res, next) => {
   }
 });
 
+app.put('/api/users/:userId', authMiddleware, async (req, res, next) => {
+  try {
+    const {
+      firstName,
+      lastName,
+      email,
+      longDescription,
+      zipCode,
+      skillId,
+      playTypeId,
+      genderId,
+      handednessId,
+    } = req.body;
+    const { userId } = req.params;
+
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !longDescription ||
+      !zipCode ||
+      !skillId ||
+      !playTypeId ||
+      !genderId ||
+      !handednessId
+    ) {
+      throw new ClientError(
+        400,
+        'Invalid input: first name, last name, description zipcode,  required'
+      );
+    }
+    const sql = `
+      update "users"
+      set "firstName" = $1,
+          "lastName" = $2,
+          "email" = $3,
+          "longDescription" = $4,
+          "zipCode" = $5,
+          "skillId" = $6,
+          "playTypeId" = $7,
+          "genderId" = $8,
+          "handednessId" = $9
+      where "userId" = $10
+      returning *;
+    `;
+    const params = [
+      firstName,
+      lastName,
+      email,
+      longDescription,
+      zipCode,
+      skillId,
+      playTypeId,
+      genderId,
+      handednessId,
+      userId,
+    ];
+    const result = await db.query<User>(sql, params);
+    const user = result.rows[0];
+    if (!user) throw new ClientError(404, 'User not found');
+    res.json(user);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.get('/api/users/:userId', authMiddleware, async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const sql = `
+      select *
+      from "users"
+      where "userId" = $1;
+    `;
+    const result = await db.query<User>(sql, [userId]);
+    const user = result.rows[0];
+    if (!user) throw new ClientError(404, 'User not found');
+    res.json(user);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.get('/api/users/:zipcode', authMiddleware, async (req, res, next) => {
+  try {
+    const { zipcode } = req.params;
+    const sql = `
+      select *
+      from "users"
+      where "zipCode" = $1;
+    `;
+    const result = await db.query<User>(sql, [zipcode]);
+    const user = result.rows[0];
+    if (!user) throw new ClientError(404, 'User not found');
+    res.json(user);
+  } catch (err) {
+    next(err);
+  }
+});
+
 app.get('*', (req, res) => res.sendFile(`${reactStaticDir}/index.html`));
 
 app.use(errorMiddleware);
