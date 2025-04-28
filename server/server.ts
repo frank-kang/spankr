@@ -139,6 +139,9 @@ app.put('/api/users/:userId', authMiddleware, async (req, res, next) => {
       where "userId" = $10
       returning *;
     `;
+    if (Number(userId) !== req.user?.userId) {
+      throw new ClientError(403, 'Not authorized');
+    }
     const params = [
       firstName,
       lastName,
