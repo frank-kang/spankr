@@ -180,22 +180,26 @@ app.get('/api/users/:userId', authMiddleware, async (req, res, next) => {
   }
 });
 
-app.get('/api/users/:zipcode', authMiddleware, async (req, res, next) => {
-  try {
-    const { zipcode } = req.params;
-    const sql = `
+app.get(
+  '/api/users/location/:zipcode',
+  authMiddleware,
+  async (req, res, next) => {
+    try {
+      const { zipcode } = req.params;
+      const sql = `
       select *
       from "users"
       where "zipCode" = $1;
     `;
-    const result = await db.query<User>(sql, [zipcode]);
-    const user = result.rows[0];
-    if (!user) throw new ClientError(404, 'User not found');
-    res.json(user);
-  } catch (err) {
-    next(err);
+      const result = await db.query<User>(sql, [zipcode]);
+      const user = result.rows[0];
+      if (!user) throw new ClientError(404, 'User not found');
+      res.json(user);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 app.get('*', (req, res) => res.sendFile(`${reactStaticDir}/index.html`));
 

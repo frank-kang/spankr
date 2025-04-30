@@ -14,6 +14,20 @@ export type Entry = {
   photoUrl: string;
 };
 
+type Player = {
+  userId: number;
+  email: string;
+  hashedPassword: string;
+  firstName: string;
+  lastName: string;
+  longDescription: string;
+  zipCode: number;
+  skillId: number;
+  playTypeId: number;
+  genderId: number;
+  handednessId: number;
+};
+
 export function saveAuth(user: User, token: string): void {
   const auth: Auth = { user, token };
   localStorage.setItem(authKey, JSON.stringify(auth));
@@ -23,8 +37,8 @@ export function removeAuth(): void {
   localStorage.removeItem(authKey);
 }
 
-export async function readEntries(): Promise<Entry[]> {
-  const url = '/api/entries';
+export async function readUserByZipCode(zipCode: number): Promise<Player[]> {
+  const url = `/api/users/location/${zipCode}`;
   const token = readToken();
   const req = {
     headers: {
@@ -34,12 +48,12 @@ export async function readEntries(): Promise<Entry[]> {
   const response = await fetch(url, req);
   if (!response.ok) throw new Error(`Response status ${response.status}`);
 
-  const entries = await response.json();
-  return entries;
+  const users = await response.json();
+  return users;
 }
 
-export async function readEntry(entryId: number): Promise<Entry | undefined> {
-  const url = `/api/entries/${entryId}`;
+export async function readUsers(userId: number): Promise<Player | undefined> {
+  const url = `/api/users/${userId}`;
   const token = readToken();
   const req = {
     headers: {
@@ -53,8 +67,8 @@ export async function readEntry(entryId: number): Promise<Entry | undefined> {
   return entry;
 }
 
-export async function addEntry(entry: Entry): Promise<Entry> {
-  const url = '/api/entries';
+export async function addUser(user: Player): Promise<Player> {
+  const url = '/api/auth/sign-in';
   const token = readToken();
   const response = await fetch(url, {
     method: 'POST',
@@ -62,15 +76,15 @@ export async function addEntry(entry: Entry): Promise<Entry> {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(entry),
+    body: JSON.stringify(user),
   });
   if (!response.ok) throw new Error(`Response status ${response.status}`);
   const json = await response.json();
   return json;
 }
 
-export async function updateEntry(entry: Entry): Promise<Entry> {
-  const url = `/api/entries/${entry.entryId}`;
+export async function updateUser(user: Player): Promise<Player> {
+  const url = `/api/users/${user.userId}`;
   const token = readToken();
   const response = await fetch(url, {
     method: 'PUT',
@@ -78,22 +92,7 @@ export async function updateEntry(entry: Entry): Promise<Entry> {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(entry),
-  });
-  const json = await response.json();
-  if (!response.ok) throw new Error(`Response status ${response.status}`);
-  return json;
-}
-
-export async function removeEntry(entryId: number): Promise<void> {
-  const url = `/api/entries/${entryId}`;
-  const token = readToken();
-  const response = await fetch(url, {
-    method: 'DELETE',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(entryId),
+    body: JSON.stringify(user),
   });
   const json = await response.json();
   if (!response.ok) throw new Error(`Response status ${response.status}`);
