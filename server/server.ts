@@ -122,7 +122,7 @@ app.put('/api/users/:userId', authMiddleware, async (req, res, next) => {
     ) {
       throw new ClientError(
         400,
-        'Invalid input: first name, last name, description zipcode,  required'
+        'Invalid input: first name, last name, description, zipcode, type of game, your gender, handedness is  required'
       );
     }
     const sql = `

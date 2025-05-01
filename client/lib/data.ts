@@ -15,9 +15,9 @@ export type Entry = {
 };
 
 type Player = {
-  userId: number;
+  userId?: number;
   email: string;
-  hashedPassword: string;
+  hashedPassword?: string;
   firstName: string;
   lastName: string;
   longDescription: string;
