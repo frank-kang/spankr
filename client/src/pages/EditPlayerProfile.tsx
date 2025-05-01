@@ -1,7 +1,60 @@
-//import { type FormEvent, useState } from 'react';
+import { type FormEvent, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { type Player, updateUser, readUsers } from '../../lib/data';
 
-export function EditPlayProfile() {
+export function EditPlayerProfile() {
   // This component is used to edit a player's profile.
+  const { userId } = useParams();
+  const [player, setPlayer] = useState<Player>();
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
+  const isEditing = userId && userId !== 'new';
+
+  useEffect(() => {
+    async function fetchPlayer(id: number) {
+      setIsLoading(true);
+      try {
+        const player = await readUsers(id);
+        if (!player) {
+          setError('Player not found');
+          return;
+        }
+        setPlayer(player);
+      } catch (err) {
+        console.error(`Error fetching player data. ${err}`);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    if (isEditing) {
+      const id = parseInt(userId as string);
+      fetchPlayer(+id);
+    }
+  }, [userId, isEditing]);
+  console.log('player', player);
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    try {
+      const formData = new FormData(event.currentTarget);
+      const newPlayer = Object.fromEntries(formData) as unknown as Player;
+      if (!isEditing) {
+        updateUser({ ...player, ...newPlayer });
+      }
+      navigate(`/player/profile/${userId}`);
+    } catch (err) {
+      console.error(`Error updating player data. ${err}`);
+    }
+  }
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) {
+    return (
+      <div>
+        Error Loading Entry with ID {userId}: {error}
+      </div>
+    );
+  }
 
   return (
     <>

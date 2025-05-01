@@ -14,7 +14,7 @@ export type Entry = {
   photoUrl: string;
 };
 
-type Player = {
+export type Player = {
   userId?: number;
   email: string;
   hashedPassword?: string;

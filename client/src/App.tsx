@@ -4,7 +4,8 @@ import { Routes, Route } from 'react-router-dom';
 import { Registration } from './pages/Registration';
 import { SignInForm } from './pages/SignInForm';
 import { UserProvider } from './components/UserContext';
-import { EditPlayProfile } from './pages/EditPlayProfile';
+import { EditPlayerProfile } from './pages/EditPlayerProfile';
+import { PlayerProfile } from './pages/PlayerProfile';
 
 export default function App() {
   return (
@@ -13,7 +14,11 @@ export default function App() {
         <Route index element={<Welcome />} />
         <Route path="/registration" element={<Registration />} />
         <Route path="/signin" element={<SignInForm />} />
-        <Route path="/player/editprofile" element={<EditPlayProfile />} />
+        <Route
+          path="/player/editprofile/:userId"
+          element={<EditPlayerProfile />}
+        />
+        <Route path="/player/profile/:userId" element={<PlayerProfile />} />
       </Routes>
     </UserProvider>
   );
