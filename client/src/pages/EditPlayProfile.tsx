@@ -1,3 +1,5 @@
+//import { type FormEvent, useState } from 'react';
+
 export function EditPlayProfile() {
   // This component is used to edit a player's profile.
 
@@ -35,10 +37,6 @@ export function EditPlayProfile() {
           <h2 className="text-base/7 font-semibold text-gray-900">
             Personal Information
           </h2>
-          <p className="mt-1 text-sm/6 text-gray-600">
-            Use a permanent address where you can receive mail.
-          </p>
-
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
               <label
