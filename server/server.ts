@@ -163,7 +163,7 @@ app.put('/api/users/:userId', authMiddleware, async (req, res, next) => {
   }
 });
 
-app.get('/api/users/:userId', authMiddleware, async (req, res, next) => {
+app.get('/api/users/:userId', async (req, res, next) => {
   try {
     const { userId } = req.params;
     const sql = `

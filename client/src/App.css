@@ -9,6 +9,11 @@
   text-align: center;
 }
 
+.logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
 .welcome {
   display: flex;
   flex-direction: column;

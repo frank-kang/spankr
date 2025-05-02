@@ -33,7 +33,7 @@ export function EditPlayerProfile() {
       fetchPlayer(+id);
     }
   }, [userId, isEditing]);
-
+  console.log('player', player);
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
@@ -61,7 +61,7 @@ export function EditPlayerProfile() {
     <>
       <form onSubmit={handleSubmit}>
         <div className="container">
-          <img src={tennisPicture} alt="pic of tennis ball" />
+          <img className="logo" src={tennisPicture} alt="pic of tennis ball" />
           <div className="space-y-12">
             <div className="border-b border-gray-900/10 pb-12">
               <h2 className="text-base/7 font-semibold text-gray-900">
@@ -76,6 +76,8 @@ export function EditPlayerProfile() {
                 </label>
                 <div className="mt-2">
                   <textarea
+                    required
+                    defaultValue={player?.longDescription}
                     name="about"
                     id="about"
                     rows={3}
@@ -102,6 +104,8 @@ export function EditPlayerProfile() {
                 </label>
                 <div className="mt-2">
                   <input
+                    required
+                    defaultValue={player?.firstName}
                     type="text"
                     name="first-name"
                     id="first-name"
@@ -118,6 +122,8 @@ export function EditPlayerProfile() {
                 </label>
                 <div className="mt-2">
                   <input
+                    required
+                    defaultValue={player?.lastName}
                     type="text"
                     name="last-name"
                     id="last-name"
@@ -134,6 +140,8 @@ export function EditPlayerProfile() {
                 </label>
                 <div className="mt-2">
                   <input
+                    required
+                    defaultValue={player?.email}
                     id="email"
                     name="email"
                     type="email"
@@ -150,6 +158,7 @@ export function EditPlayerProfile() {
                 </label>
                 <div className="mt-2">
                   <input
+                    defaultValue={player?.zipCode}
                     type="text"
                     name="zip-code"
                     id="zip-code"
@@ -166,9 +175,11 @@ export function EditPlayerProfile() {
               Select your gender
             </label>
             <select
-              id="gender"
+              value={player?.genderId}
+              name="gender-id"
+              id="gender-id"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option selected>Choose a gender</option>
+              <option>Choose a gender</option>
               <option value="1">Male</option>
               <option value="2">Female</option>
             </select>
@@ -181,9 +192,11 @@ export function EditPlayerProfile() {
               Select an option
             </label>
             <select
-              id="handedness"
+              value={player?.handedNessId}
+              name="handedness-id"
+              id="handedness-id"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option selected>Which hand do you play with?</option>
+              <option>Which hand do you play with?</option>
               <option value="1">Right</option>
               <option value="2">Left</option>
               <option value="3">Both</option>
@@ -192,6 +205,7 @@ export function EditPlayerProfile() {
 
           <div className="mt-6 flex items-center justify-end gap-x-6">
             <button
+              onClick={() => navigate(`/player/profile/${player?.userId}`)}
               type="button"
               className="text-sm/6 font-semibold text-gray-900">
               Cancel

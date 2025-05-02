@@ -25,7 +25,7 @@ export type Player = {
   skillId: number;
   playTypeId: number;
   genderId: number;
-  handednessId: number;
+  handedNessId: number;
 };
 
 export function saveAuth(user: User, token: string): void {
