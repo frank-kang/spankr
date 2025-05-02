@@ -1,6 +1,7 @@
 import { type FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { type Player, updateUser, readUsers } from '../../lib/data';
+import tennisPicture from '../public/images/smallTennisBall.jpg';
 
 export function EditPlayerProfile() {
   // This component is used to edit a player's profile.
@@ -61,6 +62,7 @@ export function EditPlayerProfile() {
     <>
       <form onSubmit={handleSubmit}>
         <div className="container">
+          <img src={tennisPicture} alt="pic of tennis ball" />
           <div className="space-y-12">
             <div className="border-b border-gray-900/10 pb-12">
               <h2 className="text-base/7 font-semibold text-gray-900">
