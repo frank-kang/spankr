@@ -33,7 +33,6 @@ export function EditPlayerProfile() {
       fetchPlayer(+id);
     }
   }, [userId, isEditing]);
-  console.log('player', player);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
