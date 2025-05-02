@@ -6,6 +6,7 @@ import { SignInForm } from './pages/SignInForm';
 import { UserProvider } from './components/UserContext';
 import { EditPlayerProfile } from './pages/EditPlayerProfile';
 import { PlayerProfile } from './pages/PlayerProfile';
+import { SearchPage } from './pages/SearchPage';
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
           element={<EditPlayerProfile />}
         />
         <Route path="/player/profile/:userId" element={<PlayerProfile />} />
+        <Route path="/player/search" element={<SearchPage />} />
       </Routes>
     </UserProvider>
   );
