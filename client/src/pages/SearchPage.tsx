@@ -1,12 +1,12 @@
 import { UserCard } from '../components/UserCard';
-import { useState } from 'react';
+/*import { useState } from 'react';
 import React from 'react';
 import { Player, readUserByZipCode } from '../../lib/data';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';*/
 
 export function SearchPage() {
-  const [players, setPlayers] = useState<Player[]>([]);
+  /*const [players, setPlayers] = useState<Player[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<unknown>();
 
@@ -24,7 +24,7 @@ export function SearchPage() {
     }
     load();
   }, []);
-
+  */
   return (
     <>
       <form>
