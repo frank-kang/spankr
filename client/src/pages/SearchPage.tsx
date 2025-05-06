@@ -1,38 +1,45 @@
 import { UserCard } from '../components/UserCard';
-/*import { useState } from 'react';
-import React from 'react';
+import { FormEvent, useState } from 'react';
 import { Player, readUserByZipCode } from '../../lib/data';
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';*/
 
 export function SearchPage() {
-  /*const [players, setPlayers] = useState<Player[]>([]);
+  const [players, setPlayers] = useState<Player[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<unknown>();
+  const [zipCode, setZipCode] = useState('');
 
-  useEffect(() => {
-    async function load() {
-      const zipCode = useParams<{ zipCode: string }>;
-      try {
-        const users = await readUserByZipCode(+zipCode);
-        setPlayers(users);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setIsLoading(false);
-      }
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+
+    try {
+      const users = await readUserByZipCode(Number(zipCode));
+      setPlayers(users);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setIsLoading(false);
     }
-    load();
-  }, []);
-  */
+  };
+  if (isLoading) return <div>Loading...</div>;
+  if (error) {
+    return (
+      <div>
+        Error Loading Players by ZipCode
+        {error instanceof Error ? error.message : 'Unknown Error'}
+      </div>
+    );
+  }
+
   return (
     <>
-      <form>
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-          <h1 className="text-3xl font-bold mb-4">Search for Players</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="flex flex-col items-center  min-h-screen bg-gray-100">
+          <h1 className="text-3xl font-bold mb-4">Search Players ZipCode</h1>
           <input
+            value={zipCode}
+            onChange={(e) => setZipCode(e.target.value)}
             type="text"
-            placeholder="Enter your location"
+            placeholder="Enter ZipCode"
             className="p-2 border border-gray-300 rounded mb-4"
           />
           <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
@@ -42,10 +49,9 @@ export function SearchPage() {
       </form>
       <div>
         <ul className="flex flex-1 gap-4 mt-4">
-          <UserCard />
-          <UserCard />
-          <UserCard />
-          <UserCard />
+          {players.map((player) => (
+            <UserCard player={player} />
+          ))}
         </ul>
       </div>
     </>

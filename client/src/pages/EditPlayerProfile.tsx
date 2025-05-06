@@ -34,12 +34,13 @@ export function EditPlayerProfile() {
     }
   }, [userId, isEditing]);
   console.log('player', player);
+
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
       const htmlFormData = new FormData(event.currentTarget);
       const newPlayer = Object.fromEntries(htmlFormData) as unknown as Player;
-      if (!isEditing) {
+      if (isEditing) {
         updateUser({ ...player, ...newPlayer });
       }
       navigate(`/player/profile/${userId}`);
@@ -78,7 +79,7 @@ export function EditPlayerProfile() {
                   <textarea
                     required
                     defaultValue={player?.longDescription}
-                    name="about"
+                    name="longDescription"
                     id="about"
                     rows={3}
                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>
@@ -107,7 +108,7 @@ export function EditPlayerProfile() {
                     required
                     defaultValue={player?.firstName}
                     type="text"
-                    name="first-name"
+                    name="firstName"
                     id="first-name"
                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   />
@@ -125,7 +126,7 @@ export function EditPlayerProfile() {
                     required
                     defaultValue={player?.lastName}
                     type="text"
-                    name="last-name"
+                    name="lastName"
                     id="last-name"
                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   />
@@ -160,7 +161,7 @@ export function EditPlayerProfile() {
                   <input
                     defaultValue={player?.zipCode}
                     type="text"
-                    name="zip-code"
+                    name="zipCode"
                     id="zip-code"
                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   />
@@ -175,8 +176,8 @@ export function EditPlayerProfile() {
               Select your gender
             </label>
             <select
-              value={player?.genderId}
-              name="gender-id"
+              defaultValue={player?.genderId}
+              name="genderId"
               id="gender-id"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
               <option>Choose a gender</option>
@@ -192,8 +193,8 @@ export function EditPlayerProfile() {
               Select an option
             </label>
             <select
-              value={player?.handedNessId}
-              name="handedness-id"
+              defaultValue={player?.handedNessId}
+              name="handedNessId"
               id="handedness-id"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
               <option>Which hand do you play with?</option>

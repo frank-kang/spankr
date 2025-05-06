@@ -7,13 +7,6 @@ type Auth = {
   token: string;
 };
 
-export type Entry = {
-  entryId?: number;
-  title: string;
-  notes: string;
-  photoUrl: string;
-};
-
 export type Player = {
   userId?: number;
   email: string;

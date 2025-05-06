@@ -94,7 +94,7 @@ app.post('/api/auth/sign-in', async (req, res, next) => {
   }
 });
 
-app.put('/api/users/:userId', authMiddleware, async (req, res, next) => {
+app.put('/api/users/:userId', async (req, res, next) => {
   try {
     const {
       firstName,
@@ -156,6 +156,7 @@ app.put('/api/users/:userId', authMiddleware, async (req, res, next) => {
     ];
     const result = await db.query<User>(sql, params);
     const user = result.rows[0];
+    console.log('user:', user);
     if (!user) throw new ClientError(404, 'User not found');
     res.json(user);
   } catch (err) {
@@ -182,7 +183,7 @@ app.get('/api/users/:userId', async (req, res, next) => {
 
 app.get(
   '/api/users/location/:zipcode',
-  authMiddleware,
+
   async (req, res, next) => {
     try {
       const { zipcode } = req.params;
@@ -192,9 +193,8 @@ app.get(
       where "zipCode" = $1;
     `;
       const result = await db.query<User>(sql, [zipcode]);
-      const user = result.rows[0];
-      if (!user) throw new ClientError(404, 'User not found');
-      res.json(user);
+      const users = result.rows;
+      res.json(users);
     } catch (err) {
       next(err);
     }
