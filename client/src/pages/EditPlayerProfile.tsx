@@ -10,7 +10,6 @@ export function EditPlayerProfile() {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
-  const isEditing = userId && userId !== 'new';
 
   useEffect(() => {
     async function fetchPlayer(id: number) {
@@ -28,21 +27,19 @@ export function EditPlayerProfile() {
         setIsLoading(false);
       }
     }
-    if (isEditing) {
-      const id = parseInt(userId as string);
-      fetchPlayer(+id);
-    }
-  }, [userId, isEditing]);
-  console.log('player', player);
+
+    const id = parseInt(userId as string);
+    fetchPlayer(+id);
+  }, [userId]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
       const htmlFormData = new FormData(event.currentTarget);
       const newPlayer = Object.fromEntries(htmlFormData) as unknown as Player;
-      if (isEditing) {
-        updateUser({ ...player, ...newPlayer });
-      }
+
+      updateUser({ ...player, ...newPlayer });
+
       navigate(`/player/profile/${userId}`);
     } catch (err) {
       console.error(`Error updating player data. ${err}`);
@@ -195,11 +192,50 @@ export function EditPlayerProfile() {
             <select
               defaultValue={player?.handedNessId}
               name="handedNessId"
-              id="handedness-id"
+              id="handedNessId"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
               <option>Which hand do you play with?</option>
               <option value="1">Right</option>
               <option value="2">Left</option>
+              <option value="3">Both</option>
+            </select>
+          </div>
+
+          <div>
+            <label
+              htmlFor="skillId"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Select an option
+            </label>
+            <select
+              defaultValue={player?.skillId}
+              name="skillId"
+              id="skillId"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option>What is your skill level?</option>
+              <option value="1">NTRP 2.5</option>
+              <option value="2">NTRP 3.0</option>
+              <option value="3">NTRP 3.5</option>
+              <option value="4">NTRP 4.0</option>
+              <option value="5">NTRP 4.5</option>
+              <option value="6">NTRP 5.0</option>
+            </select>
+          </div>
+
+          <div>
+            <label
+              htmlFor="playTypeId"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Select an option
+            </label>
+            <select
+              defaultValue={player?.playTypeId}
+              name="playTypeId"
+              id="playTypeId"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option>What kind of game?</option>
+              <option value="1">Single</option>
+              <option value="2">Double</option>
               <option value="3">Both</option>
             </select>
           </div>

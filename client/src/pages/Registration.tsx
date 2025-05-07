@@ -1,6 +1,7 @@
 import { type FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User } from '../components/UserContext';
+import tennisPicture from '../public/images/smallTennisBall.jpg';
 
 export function Registration() {
   const [isLoading, setIsLoading] = useState(false);
@@ -36,21 +37,42 @@ export function Registration() {
   }
 
   return (
-    <div className="registration">
-      <h1>Registration</h1>
-      <p>Welcome to the registration page!</p>
-      <p>Please fill out the form below to register.</p>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email:</label>
-        <input type="email" id="email" name="email" required />
-        <br />
-        <label htmlFor="password">Password:</label>
-        <input type="password" id="password" name="password" required />
-        <br />
-        <button disabled={isLoading} type="submit">
-          Register
-        </button>
-      </form>
-    </div>
+    <>
+      <div className="image-container w-[300px]">
+        <img src={tennisPicture} alt="picture of tennis ball" />
+      </div>
+      <div className="registration">
+        <h2 className="text-xl font-bold">Register</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="flex flex-wrap mb-1">
+            <div className="w-full">
+              <label className="mb-1 block">
+                Email
+                <input
+                  required
+                  name="email"
+                  type="email"
+                  className="block border border-gray-600 rounded p-2 h-8 w-full mb-2"
+                />
+              </label>
+              <label className="mb-1 block">
+                Password
+                <input
+                  required
+                  name="password"
+                  type="password"
+                  className="block border border-gray-600 rounded p-2 h-8 w-full mb-2"
+                />
+              </label>
+            </div>
+          </div>
+          <button
+            disabled={isLoading}
+            className="align-middle text-center border rounded py-1 px-3 bg-blue-600 text-white">
+            Register
+          </button>
+        </form>
+      </div>
+    </>
   );
 }

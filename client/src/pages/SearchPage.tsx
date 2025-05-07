@@ -1,6 +1,7 @@
 import { UserCard } from '../components/UserCard';
 import { FormEvent, useState } from 'react';
 import { Player, readUserByZipCode } from '../../lib/data';
+import tennisPicture from '../public/images/smallTennisBall.jpg';
 
 export function SearchPage() {
   const [players, setPlayers] = useState<Player[]>([]);
@@ -32,6 +33,9 @@ export function SearchPage() {
 
   return (
     <>
+      <div className="image-container w-[300px]">
+        <img src={tennisPicture} alt="picture of tennis ball" />
+      </div>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col items-center  ">
           <h1 className="text-3xl font-bold mb-4">Search Players ZipCode</h1>

@@ -94,7 +94,7 @@ app.post('/api/auth/sign-in', async (req, res, next) => {
   }
 });
 
-app.put('/api/users/:userId', async (req, res, next) => {
+app.put('/api/users', authMiddleware, async (req, res, next) => {
   try {
     const {
       firstName,
@@ -105,9 +105,8 @@ app.put('/api/users/:userId', async (req, res, next) => {
       skillId,
       playTypeId,
       genderId,
-      handednessId,
+      handedNessId,
     } = req.body;
-    const { userId } = req.params;
 
     if (
       !firstName ||
@@ -115,10 +114,8 @@ app.put('/api/users/:userId', async (req, res, next) => {
       !email ||
       !longDescription ||
       !zipCode ||
-      !skillId ||
-      !playTypeId ||
       !genderId ||
-      !handednessId
+      !handedNessId
     ) {
       throw new ClientError(
         400,
@@ -135,13 +132,10 @@ app.put('/api/users/:userId', async (req, res, next) => {
           "skillId" = $6,
           "playTypeId" = $7,
           "genderId" = $8,
-          "handednessId" = $9
+          "handedNessId" = $9
       where "userId" = $10
       returning *;
     `;
-    if (Number(userId) !== req.user?.userId) {
-      throw new ClientError(403, 'Not authorized');
-    }
     const params = [
       firstName,
       lastName,
@@ -151,12 +145,11 @@ app.put('/api/users/:userId', async (req, res, next) => {
       skillId,
       playTypeId,
       genderId,
-      handednessId,
-      userId,
+      handedNessId,
+      req.user?.userId,
     ];
     const result = await db.query<User>(sql, params);
     const user = result.rows[0];
-    console.log('user:', user);
     if (!user) throw new ClientError(404, 'User not found');
     res.json(user);
   } catch (err) {
@@ -164,7 +157,7 @@ app.put('/api/users/:userId', async (req, res, next) => {
   }
 });
 
-app.get('/api/users/:userId', async (req, res, next) => {
+app.get('/api/users/:userId', authMiddleware, async (req, res, next) => {
   try {
     const { userId } = req.params;
     const sql = `
@@ -183,6 +176,7 @@ app.get('/api/users/:userId', async (req, res, next) => {
 
 app.get(
   '/api/users/location/:zipcode',
+  authMiddleware,
 
   async (req, res, next) => {
     try {

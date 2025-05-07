@@ -77,7 +77,7 @@ export async function addUser(user: Player): Promise<Player> {
 }
 
 export async function updateUser(user: Player): Promise<Player> {
-  const url = `/api/users/${user.userId}`;
+  const url = `/api/users`;
   const token = readToken();
   const response = await fetch(url, {
     method: 'PUT',
