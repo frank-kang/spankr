@@ -33,7 +33,7 @@ export function SearchPage() {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-col items-center  min-h-screen bg-gray-100">
+        <div className="flex flex-col items-center  ">
           <h1 className="text-3xl font-bold mb-4">Search Players ZipCode</h1>
           <input
             value={zipCode}

@@ -27,7 +27,7 @@ export function Registration() {
       if (!response.ok) throw new Error(`Response status ${response.status}`);
       const user = (await response.json()) as User;
       alert(`Successfully registered ${user.email}`);
-      navigate('/profile');
+      navigate(`/player/profile/${user.userId}`);
     } catch (error) {
       console.error(error);
     } finally {

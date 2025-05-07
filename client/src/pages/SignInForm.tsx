@@ -34,7 +34,7 @@ export function SignInForm() {
       handleSignIn(user, token);
       console.log('Signed In', user);
       console.log('Received token:', token);
-      navigate('/');
+      navigate(`/player/profile/${user.userId}`);
     } catch (err) {
       alert(`Error signing in: ${err}`);
     } finally {
