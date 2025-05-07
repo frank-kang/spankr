@@ -42,7 +42,7 @@ export function PlayerProfile() {
 
   return (
     <>
-      <div className="image-container w-[300px]">
+      <div className="image-container">
         <img src={tennisPicture} alt="picture of tennis ball" />
       </div>
       <div className="bg-white overflow-hidden shadow rounded-lg border">
