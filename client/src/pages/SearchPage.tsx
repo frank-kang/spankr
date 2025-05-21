@@ -38,7 +38,9 @@ export function SearchPage() {
       </div>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col items-center  ">
-          <h1 className="text-3xl font-bold mb-4">Search Players ZipCode</h1>
+          <h1 className="text-3xl font-bold mb-4">
+            Search By Players' ZipCode
+          </h1>
           <input
             value={zipCode}
             onChange={(e) => setZipCode(e.target.value)}
