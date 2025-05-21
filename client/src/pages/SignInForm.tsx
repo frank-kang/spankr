@@ -33,8 +33,6 @@ export function SignInForm() {
       }
       const { user, token } = (await res.json()) as AuthData;
       handleSignIn(user, token);
-      console.log('Signed In', user);
-      console.log('Received token:', token);
       navigate(`/player/profile/${user.userId}`);
     } catch (err) {
       alert(`Error signing in: ${err}`);
@@ -73,11 +71,16 @@ export function SignInForm() {
               </label>
             </div>
           </div>
-          <button
-            disabled={isLoading}
-            className="align-middle text-center border rounded py-1 px-3 bg-blue-600 text-white">
-            Sign In
-          </button>
+          <div className="flex content-between gap-8">
+            <button
+              disabled={isLoading}
+              className="text-center border rounded py-1 px-3 bg-blue-600 text-white">
+              Sign In
+            </button>
+            <button className="text-center border rounded py-1 px-3 bg-blue-600 text-white gap-4">
+              As Guest
+            </button>
+          </div>
         </form>
       </div>
     </>
