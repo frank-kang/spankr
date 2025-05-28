@@ -32,6 +32,7 @@ insert into "playTypes"
 insert into "users"
    ("firstName", "lastName", "email","longDescription", "zipCode", "hashedPassword","skillId","playTypeId","genderId","handedNessId")
    values
+   ('', '', 'guest@tennis.com', '', 92024, '$argon2id$v=19$m=65536,t=3,p=4$GBFSofZENToijleAWvoV1g$GT0W2oN523X5SOYShLVlXHodi77KoTefZq196EFiFtI', 4, 3, 2, 1);
    ('Frank', 'Kang', 'frankkang@rocketmail.com', 'Plays offensive all court game', 92026, 'tennis', 4, 1, 1, 1),
    ('Tom', 'Brown', 'tombrown@rocketmail.com', 'Plays defensive baseline game', 92025, 'tennis', 5, 1, 1, 1),
    ('Mary', 'Larkin', 'marylarkin@rocketmail.com', 'Plays defensive all court game', 92024, 'tennis', 4, 1, 2, 2),

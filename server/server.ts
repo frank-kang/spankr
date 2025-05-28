@@ -94,6 +94,32 @@ app.post('/api/auth/sign-in', async (req, res, next) => {
   }
 });
 
+app.post('/api/auth/guest-sign-in', async (req, res, next) => {
+  try {
+    const email = 'guest@tennis.com';
+    const password = 'tennis';
+    if (!email || !password) {
+      throw new ClientError(401, 'Invalid log-in');
+    }
+    const sql = `
+    select *
+    from "users"
+    where "email" = $1;
+    `;
+    const result = await db.query<User>(sql, [email]);
+    const user = result.rows[0];
+    if (!user) throw new ClientError(401, 'not authorized');
+    if (!(await argon2.verify(user.hashedPassword, password))) {
+      throw new ClientError(401, 'not authorized');
+    }
+    const payload = { email: user.email, userId: user.userId };
+    const token = jwt.sign(payload, hashKey);
+    res.json({ user: payload, token });
+  } catch (err) {
+    next(err);
+  }
+});
+
 app.put('/api/users', authMiddleware, async (req, res, next) => {
   try {
     const {

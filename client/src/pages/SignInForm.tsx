@@ -41,6 +41,27 @@ export function SignInForm() {
     }
   }
 
+  async function handleGuestSignIn() {
+    try {
+      setIsLoading(true);
+      const req = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      };
+      const res = await fetch('/api/auth/guest-sign-in', req);
+      if (!res.ok) {
+        throw new Error(`fetch Error ${res.status}`);
+      }
+      const { user, token } = (await res.json()) as AuthData;
+      handleSignIn(user, token);
+      navigate(`/player/profile/${user.userId}`);
+    } catch (err) {
+      alert(`Error signing in as guest: ${err}`);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <>
       <div className="image-container w-[300px]">
@@ -77,7 +98,9 @@ export function SignInForm() {
               className="text-center border rounded py-1 px-3 bg-blue-600 text-white">
               Sign In
             </button>
-            <button className="text-center border rounded py-1 px-3 bg-blue-600 text-white gap-4">
+            <button
+              onClick={handleGuestSignIn}
+              className="text-center border rounded py-1 px-3 bg-blue-600 text-white gap-4">
               As Guest
             </button>
           </div>
