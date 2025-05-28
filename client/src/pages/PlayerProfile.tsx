@@ -87,7 +87,7 @@ export function PlayerProfile() {
       </div>
       <div className="flex space-x-4">
         <button
-          onClick={() => navigate('/player/search')}
+          onClick={() => navigate(`/player/search/${userId}`)}
           className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
           Find Players
         </button>

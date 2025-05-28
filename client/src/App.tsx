@@ -20,7 +20,7 @@ export default function App() {
           element={<EditPlayerProfile />}
         />
         <Route path="/player/profile/:userId" element={<PlayerProfile />} />
-        <Route path="/player/search" element={<SearchPage />} />
+        <Route path="/player/search/:userId" element={<SearchPage />} />
       </Routes>
     </UserProvider>
   );

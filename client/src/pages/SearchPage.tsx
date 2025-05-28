@@ -2,12 +2,15 @@ import { UserCard } from '../components/UserCard';
 import { FormEvent, useState } from 'react';
 import { Player, readUserByZipCode } from '../../lib/data';
 import tennisPicture from '../public/images/smallTennisBall.jpg';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export function SearchPage() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<unknown>();
   const [zipCode, setZipCode] = useState('');
+  const { userId } = useParams();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -48,9 +51,16 @@ export function SearchPage() {
             placeholder="Enter ZipCode"
             className="p-2 border border-gray-300 rounded mb-4"
           />
-          <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-            Search
-          </button>
+          <div className="flex space-x-4">
+            <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+              Search
+            </button>
+            <button
+              onClick={() => navigate(`/player/profile/${userId}`)}
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+              Back to Profile
+            </button>
+          </div>
         </div>
       </form>
       <div>
